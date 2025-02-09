@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackaton-grafana-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackaton-grafana
+  template:
+    metadata:
+      labels:
+        app: hackaton-grafana
+    spec:
+      containers:
+      - name: hackaton-grafana
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
+          subPath: grafana
+        - name: grafana-config
+          mountPath: /etc/grafana/grafana.ini
+          subPath: grafana.ini
+      volumes:
+      - name: grafana-storage
+        emptyDir: {}
+      - name: grafana-config
+        configMap:
+          name: hackaton-grafana-config-map

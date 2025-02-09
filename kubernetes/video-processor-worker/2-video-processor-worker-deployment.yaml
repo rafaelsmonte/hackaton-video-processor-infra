@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackaton-video-processor-worker-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackaton-video-processor-worker-service
+  template:
+    metadata:
+      labels:
+        app: hackaton-video-processor-worker-service
+    spec:
+      containers:
+      - name: hackaton-video-processor-worker-service
+        image: 839260668425.dkr.ecr.us-east-1.amazonaws.com/hackaton/video_processor_worker:latest
+        resources:
+          limits:
+              memory: "512Mi"
+              cpu: "500m"
+        ports:
+          - containerPort: 8080
+            name: http
+        envFrom:
+            - secretRef:
+                name: hackaton-video-processor-worker-external-secret
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 30

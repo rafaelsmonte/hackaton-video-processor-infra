@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events {}
+
+    stream {
+        upstream payments_db {
+            server tech-challenge-7soat-payments-db-primary.cxeo4mo48u6m.us-east-1.rds.amazonaws.com:5432;
+        }
+
+        server {
+            listen 55432;
+
+            proxy_pass payments_db;
+            proxy_timeout 10s;
+            proxy_connect_timeout 10s;
+        }
+
+        upstream products_catalog_db {
+            server tech-challenge-7soat-products-catalog-db-primary.cxeo4mo48u6m.us-east-1.rds.amazonaws.com:5432;
+        }
+
+        server {
+            listen 55433;
+
+            proxy_pass products_catalog_db;
+            proxy_timeout 10s;
+            proxy_connect_timeout 10s;
+        }
+    }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-rds-proxy
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 55432
+        - containerPort: 55433
+      volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: nginx-config
