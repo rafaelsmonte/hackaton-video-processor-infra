@@ -9,6 +9,7 @@ This repository contains the Infrastructure as Code (IaC) configuration for the 
 - [Infrastructure](./docs/infrastructure.md)
 - [Kubernetes](./docs/kubernetes.md)
 - [Terraform](./docs/terraform.md)
+- [Load Tests](./docs/load-tests.md)
 
 ## Structure
 
