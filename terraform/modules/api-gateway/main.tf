@@ -46,11 +46,6 @@ resource "aws_apigatewayv2_integration" "aaws_apigatewayv2_integration_lambda_in
   integration_uri = var.api_gateway_lambda_integration_integration_uri
   payload_format_version = var.api_gateway_lambda_integration_payload_format_version
 
-  request_parameters = {
-    "overwrite:header.x-user-sub"   = "$context.authorizer.jwt.claims.sub"
-    "overwrite:header.x-user-email" = "$context.authorizer.jwt.claims.email"
-  }
-
   # Grant API Gateway permission to invoke your Lambda function
   depends_on = [aws_lambda_permission.aws_lambda_permission_allow_api_gateway]
 }
@@ -70,6 +65,10 @@ resource "aws_apigatewayv2_integration" "apigatewayv2_integration_video_processo
   integration_method = var.api_gateway_video_processor_api_integration_method
   connection_type   = var.api_gateway_video_processor_api_connection_type
   integration_uri   = var.api_gateway_video_processor_api_integration_uri
+
+  request_parameters = {
+    "overwrite:header.x-user-id"   = "$context.authorizer.claims.sub"
+  }
 }
 
 resource "aws_apigatewayv2_route" "proxy_route_video_processor_api" {

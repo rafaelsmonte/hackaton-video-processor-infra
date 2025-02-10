@@ -142,6 +142,6 @@ api_gateway_lambda_integration_payload_format_version = "2.0"
 api_gateway_video_processor_api_integration_type = "HTTP_PROXY"
 api_gateway_video_processor_api_integration_method = "ANY"
 api_gateway_video_processor_api_connection_type = "INTERNET"
-api_gateway_video_processor_api_integration_uri = "http://a148702807dea422b855305f30e40d50-950944675.us-east-1.elb.amazonaws.com/{proxy}"
+api_gateway_video_processor_api_integration_uri = "http://ab302b34941be4a0bb617babafed09de-48918628.us-east-1.elb.amazonaws.com/{proxy}"
 
 api_gateway_auto_deploy = true
