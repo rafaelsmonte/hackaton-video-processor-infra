@@ -1,7 +1,3 @@
-Here’s a more technical and well-structured version of your text:  
-
----
-
 # Load Test Results  
 
 This document presents the results of a series of load tests conducted to assess the performance of the video image processor worker under high request volumes.  
