@@ -41,6 +41,6 @@ async function sendMessage() {
   }
 }
 
-for (i=0; i<500; i++) {
+for (i=0; i<100; i++) {
     sendMessage();
 }

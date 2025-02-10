@@ -23,7 +23,8 @@ terraform apply -var-file values.tfvars
 2. Run: aws eks describe-cluster --name <CLUSTER_NAME> --query "cluster.identity.oidc.issuer" --output text
 3. Update the autoscaler/cluster-autoscaler-aws-role.json with the oidc id of the clsuter
 4. Run: eksctl utils associate-iam-oidc-provider --region=$AWS_REGION --cluster=$EKS_CLUSTER_NAME --approve
-5. Run: terraform apply -target=module.kubernetes-drivers -var-file values.tfvars
+5. Run: $aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION --profile default
+6. Run: terraform apply -target=module.kubernetes-drivers -var-file values.tfvars
 ```
 
 ## AWS Resources Provisioned via Terraform
