@@ -59,8 +59,6 @@ resource "aws_apigatewayv2_route" "aws_apigatewayv2_route_signup" {
   api_id     = aws_apigatewayv2_api.aws_apigatewayv2_api_hackaton.id
   route_key  = "ANY /api/v1/auth/{proxy+}"
   target     = "integrations/${aws_apigatewayv2_integration.aaws_apigatewayv2_integration_lambda_integration.id}"
-  /* authorization_type = "JWT" */
-  /* authorizer_id      = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer_hackaton.id */
 }
 
 #============================================================
@@ -78,41 +76,9 @@ resource "aws_apigatewayv2_route" "proxy_route_video_processor_api" {
   api_id     = aws_apigatewayv2_api.aws_apigatewayv2_api_hackaton.id
   route_key  = "ANY /api/v1/{proxy+}"
   target     = "integrations/${aws_apigatewayv2_integration.apigatewayv2_integration_video_processor_api_integration.id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.aws_apigatewayv2_authorizer_hackaton.id
 }
-
-#============================================================
-# Api gateway configuration for orders service apis
-#============================================================
-/* resource "aws_apigatewayv2_integration" "apigatewayv2_integration_orders_service_integration" {
-  api_id            = aws_apigatewayv2_api.apigatewayv2_api_gateway_7soat.id
-  integration_type  = var.api_gateway_orders_service_integration_type
-  integration_method = var.api_gateway_orders_service_integration_method
-  connection_type   = var.api_gateway_orders_service_connection_type
-  integration_uri   = var.api_gateway_orders_service_integration_uri
-}
-
-resource "aws_apigatewayv2_route" "proxy_route_orders_apis" {
-  api_id     = aws_apigatewayv2_api.apigatewayv2_api_gateway_7soat.id
-  route_key  = "ANY /apis/orders/{proxy+}"
-  target     = "integrations/${aws_apigatewayv2_integration.apigatewayv2_integration_orders_service_integration.id}"
-} */
-
-#============================================================
-# Api gateway configuration for payments service apis
-#============================================================
-/* resource "aws_apigatewayv2_integration" "apigatewayv2_integration_payments_service_integration" {
-  api_id            = aws_apigatewayv2_api.apigatewayv2_api_gateway_7soat.id
-  integration_type  = var.api_gateway_payments_service_integration_type
-  integration_method = var.api_gateway_payments_service_integration_method
-  connection_type   = var.api_gateway_payments_service_connection_type
-  integration_uri   = var.api_gateway_payments_service_integration_uri
-}
-
-resource "aws_apigatewayv2_route" "proxy_route_payments_apis" {
-  api_id     = aws_apigatewayv2_api.apigatewayv2_api_gateway_7soat.id
-  route_key  = "ANY /apis/payments/{proxy+}"
-  target     = "integrations/${aws_apigatewayv2_integration.apigatewayv2_integration_payments_service_integration.id}"
-} */
 
 #============================================================
 # Api gateway configuration for prod stage
